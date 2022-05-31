@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: [ ubuntu-latest, macos-latest ]
     steps:
     - name: checkout cpython
       uses: actions/checkout@master
