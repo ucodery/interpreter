@@ -15,8 +15,6 @@ jobs:
       with:
         repository: libarchive/bzip2
         ref: refs/tags/bzip2-1.0.8
-    - name: configure
-      run: ./configure
     - name: make
       run: make
     - name: make check
