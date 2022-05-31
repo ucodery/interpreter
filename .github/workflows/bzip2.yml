@@ -17,5 +17,3 @@ jobs:
         ref: refs/tags/bzip2-1.0.8
     - name: make
       run: make
-    - name: make check
-      run: make check
