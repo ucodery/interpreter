@@ -1,0 +1,23 @@
+name: zlib
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout zlib
+      uses: actions/checkout@master
+      with:
+        repository: madler/zlib
+        ref: refs/tags/v1.2.11
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
+    - name: test
+      run: make test
