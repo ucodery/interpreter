@@ -16,9 +16,10 @@ jobs:
         repository: python/cpython
         ref: refs/tags/v3.10.4
     - name: configure
-      run: ./configure
+      run: ./configure LDFLAGS='-static' --disable-shared  --enable-optimizations
     - name: make
-      run: make
+      run: make LDFLAGS='-static' LINKFORSHARED=' '
+    - name: test
+      run: ./python  -V
 # full test suite will take hours
-#    - name: test
 #      run: make test
