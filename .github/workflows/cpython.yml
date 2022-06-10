@@ -17,9 +17,16 @@ jobs:
         ref: refs/tags/v3.10.4
     - name: configure
       run: ./configure LDFLAGS='-static' --disable-shared  --enable-optimizations
+    - name: enable static modules
+      run: echo '*static*' > Modules/Setup.local && sed -n -E 's/^#([a-z_].*)$/\1/p' Modules/Setup >> Modules/Setup.local
     - name: make
       run: make LDFLAGS='-static' LINKFORSHARED=' '
     - name: test
       run: ./python  -V
 # full test suite will take hours
 #      run: make test
+    - name: upload
+      uses: actions/upload-artifact@v3
+      with:
+        - name: python
+        - path: python.exe
