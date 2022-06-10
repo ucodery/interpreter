@@ -18,7 +18,7 @@ jobs:
     - name: configure
       run: ./configure LDFLAGS='-static' --disable-shared  --enable-optimizations
     - name: enable static modules
-      run: echo '*static*' > Modules/Setup.local && sed -n -E 's/^#([a-z_].*)$/\1/p' Modules/Setup >> Modules/Setup.local
+      run: echo '*static*' > Modules/Setup.local && sed -n -E 's/^#([a-z_].*)$/\1/p' Modules/Setup >> Modules/Setup.local && sed -i.bak '/^_\{0,1\}xx/d' Modules/Setup.local && sed -i.bak '/^_test/d' Modules/Setup.local
     - name: make
       run: make LDFLAGS='-static' LINKFORSHARED=' '
     - name: test
