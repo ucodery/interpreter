@@ -23,6 +23,8 @@ jobs:
       run: sed -i.bak '/^_g\{0,1\}dbm/d' Modules/Setup.local && sed -i.bak '/^_curses/d' Modules/Setup.local
     - name: statically link all of openssl
       run: sed -i.bak 's/^_hashlib/_hashlib _hashopenssl.c $(OPENSSL_INCLUDES) $(OPENSSL_LDFLAGS) -l:libcrypto.a -Wl,--exclude-libs,libcrypto.a/g' Modules/Setup.local && sed -i.bak 's/^_ssl/_ssl _ssl.c $(OPENSSL_INCLUDES) $(OPENSSL_LDFLAGS) -l:libssl.a -Wl,--exclude-libs,libssl.a -l:libcrypto.a -Wl,--exclude-libs,libcrypto.a /g' Modules/Setup.local
+    - name: disable more
+      run: echo "*disabled*" >> Modules/Setup.local && echo "_sqlite3 _tkinter _curses" >> Modules/Setup.local
     - name: make
       run: make LDFLAGS='-static' LINKFORSHARED=' '
     - name: test
