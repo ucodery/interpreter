@@ -17,12 +17,12 @@ jobs:
         ref: refs/tags/v3.10.4
     - name: configure
       run: ./configure LDFLAGS='-static' --disable-shared  --enable-optimizations
-    - name: enable static modules
-      run: echo '*static*' > Modules/Setup.local && sed -n -E 's/^#([a-z_].*)$/\1/p' Modules/Setup >> Modules/Setup.local && sed -i.bak '/^_\{0,1\}xx/d' Modules/Setup.local && sed -i.bak '/^_test/d' Modules/Setup.local
-    - name: disable optaional modules # these should be fixable
-      run: sed -i.bak '/^_g\{0,1\}dbm/d' Modules/Setup.local && sed -i.bak '/^_curses/d' Modules/Setup.local && sed -i.bak '/^_sqlite3/d' Modules/Setup.local && sed -i.bak '/^_tkinter/d' Modules/Setup.local
-    - name: statically link all of openssl
-      run: sed -i.bak 's/^_hashlib.*$/_hashlib _hashopenssl.c $(OPENSSL_INCLUDES) $(OPENSSL_LDFLAGS) -l:libcrypto.a -Wl,--exclude-libs,libcrypto.a/g' Modules/Setup.local && sed -i.bak 's/^_ssl.*$/_ssl _ssl.c $(OPENSSL_INCLUDES) $(OPENSSL_LDFLAGS) -l:libssl.a -Wl,--exclude-libs,libssl.a -l:libcrypto.a -Wl,--exclude-libs,libcrypto.a /g' Modules/Setup.local
+#    - name: enable static modules
+#      run: echo '*static*' > Modules/Setup.local && sed -n -E 's/^#([a-z_].*)$/\1/p' Modules/Setup >> Modules/Setup.local && sed -i.bak '/^_\{0,1\}xx/d' Modules/Setup.local && sed -i.bak '/^_test/d' Modules/Setup.local
+#    - name: disable optaional modules # these should be fixable
+#      run: sed -i.bak '/^_g\{0,1\}dbm/d' Modules/Setup.local && sed -i.bak '/^_curses/d' Modules/Setup.local && sed -i.bak '/^_sqlite3/d' Modules/Setup.local && sed -i.bak '/^_tkinter/d' Modules/Setup.local
+#    - name: statically link all of openssl
+#      run: sed -i.bak 's/^_hashlib.*$/_hashlib _hashopenssl.c $(OPENSSL_INCLUDES) $(OPENSSL_LDFLAGS) -l:libcrypto.a -Wl,--exclude-libs,libcrypto.a/g' Modules/Setup.local && sed -i.bak 's/^_ssl.*$/_ssl _ssl.c $(OPENSSL_INCLUDES) $(OPENSSL_LDFLAGS) -l:libssl.a -Wl,--exclude-libs,libssl.a -l:libcrypto.a -Wl,--exclude-libs,libcrypto.a /g' Modules/Setup.local
     - name: make
       run: make LDFLAGS='-static' LINKFORSHARED=' '
     - name: test
