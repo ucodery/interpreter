@@ -18,10 +18,11 @@ jobs:
     - name: configure
       run: ./configure LDFLAGS='-static' --disable-shared  --enable-optimizations
     - name: enable static modules
-      run: echo '*static*\
-      _asyncio _asynciomodule.c\
-      _bisect _bisectmodule.c\
-      contextvars _contextvarsmodule.c' > Modules/Setup.local
+      run: |
+        echo '*static*
+        _asyncio _asynciomodule.c
+        _bisect _bisectmodule.c
+        contextvars _contextvarsmodule.c' > Modules/Setup.local
 #    - name: disable optaional modules # these should be fixable
 #      run: sed -i.bak '/^_g\{0,1\}dbm/d' Modules/Setup.local && sed -i.bak '/^_curses/d' Modules/Setup.local && sed -i.bak '/^_sqlite3/d' Modules/Setup.local && sed -i.bak '/^_tkinter/d' Modules/Setup.local
 #    - name: statically link all of openssl
