@@ -25,7 +25,8 @@ jobs:
         #_contextvars _contextvarsmodule.c
         _csv _csv.c
         _datetime _datetimemodule.c
-        _decimal _decimal/_decimal.c
+        # needs mpdecimal.h on the image
+        #_decimal _decimal/_decimal.c
         _heapq _heapqmodule.c
          _json.c
         _lsprof _lsprof.c rotatingtree.c
