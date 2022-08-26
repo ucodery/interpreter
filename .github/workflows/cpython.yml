@@ -30,7 +30,7 @@ jobs:
         _heapq _heapqmodule.c
          _json.c
         _lsprof _lsprof.c rotatingtree.c
-        _multiprocessing -I$(srcdir)/Modules/_multiprocessing _multiprocessing/multiprocessing.c _multiprocessing/semaphore.c
+        #_multiprocessing -I$(srcdir)/Modules/_multiprocessing _multiprocessing/multiprocessing.c _multiprocessing/semaphore.c
         _opcode _opcode.c
         _pickle _pickle.c
         _queue _queuemodule.c
