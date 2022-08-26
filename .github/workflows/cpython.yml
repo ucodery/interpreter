@@ -38,7 +38,7 @@ jobs:
         _socket socketmodule.c
          _statisticsmodule.c
          _struct.c
-        _typing _typingmodule.c
+        #_typing _typingmodule.c
         _zoneinfo _zoneinfo.c
         array arraymodule.c
         audioop audioop.c
