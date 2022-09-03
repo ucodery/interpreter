@@ -43,8 +43,8 @@ jobs:
         array arraymodule.c
         audioop audioop.c
         binascii binascii.c
-        cmath cmathmodule.c
-        math mathmodule.c
+        #cmath cmathmodule.c
+        #math mathmodule.c
         mmap mmapmodule.c
         select selectmodule.c
         _elementtree _elementtree.c
