@@ -82,6 +82,9 @@ jobs:
       run: ./python  -V
 # full test suite will take hours
 #      run: make test
+    - name: inspect
+      run: ls -rl ./ && \
+        python -m sysconfig
     - name: upload
       uses: actions/upload-artifact@v3
       with:
