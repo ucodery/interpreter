@@ -15,7 +15,6 @@ jobs:
       with:
         repository: indygreg/PyOxidizer
         fetch-depth: 0
-        ref: refs/tags/v0.10.3
     - name: build
       run: |
         cargo install --path ./pyoxidizer
