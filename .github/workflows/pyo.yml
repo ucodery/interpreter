@@ -1,0 +1,34 @@
+name: pyo
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: [ ubuntu-latest ]
+    steps:
+    - name: checkout pyoxidizer
+      uses: actions/checkout@master
+      with:
+        repository: indygreg/PyOxidizer
+        ref: refs/tags/v0.10.3
+    - name: build
+      run: |
+        cargo install
+        cd pyoxy
+        pyoxidizer build --var PYTHON_VERSION 3.8 --release
+        CFG=$(find . pyo3-build-config-file.txt)
+        PYO3_CONFIG_FILE=$CFG cargo build --release
+        PY=$(grep -Po '(?<=executable=).*' $CFG)
+        mv $PY ./python
+    - name: inspect
+      run: |
+        ./python -m sysconfig
+    - name: upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: python
+        path: python
