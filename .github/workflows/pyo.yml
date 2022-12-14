@@ -20,7 +20,7 @@ jobs:
         cargo install --path ./pyoxidizer
         cd pyoxy
         pyoxidizer build --var PYTHON_VERSION 3.8 --release
-        CFG=$(find . -name pyo3-build-config-file.txt)
+        CFG=$(find $(pwd) -name pyo3-build-config-file.txt)
         PYO3_CONFIG_FILE=$CFG cargo build --release
         PY=$(grep -Po '(?<=executable=).*' $CFG)
         mv $PY ./python
