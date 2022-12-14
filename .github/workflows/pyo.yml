@@ -25,7 +25,7 @@ jobs:
         PY=$(grep -Po '(?<=executable=).*' $CFG)
         echo $PY ";;"
         ls -Al $(dirname $PY)
-        mv $PY ./python
+        mv $PY ../python
     - name: inspect
       run: |
         ls -Al
