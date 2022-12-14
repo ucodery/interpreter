@@ -23,9 +23,12 @@ jobs:
         CFG=$(find $(pwd) -name pyo3-build-config-file.txt)
         PYO3_CONFIG_FILE=$CFG cargo build --release
         PY=$(grep -Po '(?<=executable=).*' $CFG)
+        echo $PY ";;"
+        ls -Al $(dirname $PY)
         mv $PY ./python
     - name: inspect
       run: |
+        ls -Al
         ./python -m sysconfig
     - name: upload
       uses: actions/upload-artifact@v3
