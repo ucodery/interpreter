@@ -14,6 +14,7 @@ jobs:
       uses: actions/checkout@master
       with:
         repository: indygreg/PyOxidizer
+        ref: 0defb06fd21c81dbde43ff8ffddd92ff133ec4c0
         fetch-depth: 0
     - name: build
       run: |
