@@ -25,13 +25,12 @@ jobs:
         PY=$(grep -Po '(?<=executable=).*' $CFG)
         echo $PY ";;"
         ls -Al $(dirname $PY)
-        mv $PY ../python
+        mv $(dirname $(dirname $PY)) ../build
     - name: inspect
       run: |
-        ls -Al
-        ./python -m sysconfig
+        ./build/bin/python3 -m sysconfig
     - name: upload
       uses: actions/upload-artifact@v3
       with:
         name: python
-        path: python
+        path: build
