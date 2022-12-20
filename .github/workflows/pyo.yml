@@ -18,6 +18,8 @@ jobs:
         fetch-depth: 0
     - name: build
       run: |
+        python -V
+        python3 -V
         cargo install --path ./pyoxidizer
         cd pyoxy
         pyoxidizer build --var PYTHON_VERSION 3.8 --release
