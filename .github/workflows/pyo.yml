@@ -18,6 +18,7 @@ jobs:
         fetch-depth: 0
     - name: build
       run: |
+        set -x
         python -V
         python3 -V
         cargo install --path ./pyoxidizer
