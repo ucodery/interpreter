@@ -25,9 +25,9 @@ jobs:
         CFG=$(find $(pwd) -name pyo3-build-config-file.txt)
         PYO3_CONFIG_FILE=$CFG cargo build --release
         PY=$(grep -Po '(?<=executable=).*' $CFG)
-        echo $PY
-        ls -Al $(dirname $PY)
         mv $(dirname $(dirname $PY)) ../build
+        ls -ld ../build
+        ls -l ../build
     - name: inspect
       run: |
         ./build/bin/python3 -m sysconfig
