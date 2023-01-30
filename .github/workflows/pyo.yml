@@ -28,11 +28,12 @@ jobs:
         mv $(dirname $(dirname $PY)) ../build
         ls -ld ../build
         ls -l ../build
+        ls -l ../build/install
     - name: inspect
       run: |
-        ./build/bin/python3 -m sysconfig
+        ./build/install/bin/python3 -m sysconfig
     - name: upload
       uses: actions/upload-artifact@v3
       with:
         name: python
-        path: build
+        path: build/install
