@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         python_version: ['3.8', '3.9', '3.10']
-        os: [ ubuntu-latest ]
+        os: [ ubuntu-latest, macos-latest ]
     steps:
     - name: checkout pyoxidizer
       uses: actions/checkout@master
