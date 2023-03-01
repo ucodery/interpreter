@@ -28,7 +28,7 @@ jobs:
         pyoxidizer build --var PYTHON_VERSION ${{ matrix.python_version }} --release
         CFG="$(find $(pwd) -name pyo3-build-config-file.txt)"
         PYO3_CONFIG_FILE="$CFG" cargo build --release
-        PY="$(grep -Po '(?<=executable=).*' $CFG)"
+        PY="$(sed -rn 's/^executable=(.*)$/\1/p' $CFG)"
         mv "$(dirname $(dirname $PY))" ../build
     - name: inspect
       run: |
