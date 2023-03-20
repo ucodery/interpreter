@@ -1,0 +1,40 @@
+name: build python
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python_version: ['3.8', '3.9', '3.10']
+        os: [ ubuntu-latest, macos-latest ]
+    steps:
+    - name: checkout pyoxidizer
+      uses: actions/checkout@master
+      with:
+        repository: indygreg/PyOxidizer
+        ref: main
+    - name: build
+      run: |
+        set -x
+        mkdir -p build
+        cargo install --path ./pyoxidizer
+        cd pyoxy
+        pyoxidizer build --var PYTHON_VERSION ${{ matrix.python_version }} --release
+        CFG="$(find $(pwd) -name pyo3-build-config-file.txt)"
+        PYO3_CONFIG_FILE="$CFG" cargo build --release
+        PY="$(sed -rn 's/^executable=(.*)$/\1/p' $CFG)"
+        mv "$(dirname $(dirname $PY))" ../build
+    - name: inspect
+      run: |
+        ./build/install/bin/python3 -m sysconfig
+    - name: upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: python
+        path: build/install
