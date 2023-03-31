@@ -39,7 +39,7 @@ jobs:
         mv build/install wheel/interpreter-${{ matrix.python_version }}.data/data/python
         ls wheel/*/data/*
         wheel_name="interpreter-${{ matrix.python_version }}-py2.py3-none-$(python -c "import sysconfig;print(sysconfig.get_platform().replace('.','_').replace('-','_').replace('linux','manylinux'))").whl"
-        zip $wheel_name wheel/
+        zip -r $wheel_name wheel/*
     - name: upload
       uses: actions/upload-artifact@v3
       with:
