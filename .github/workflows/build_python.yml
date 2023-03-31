@@ -19,7 +19,8 @@ jobs:
       with:
         repository: indygreg/PyOxidizer
         ref: main
-    - name: build
+
+    - name: build python
       run: |
         set -x
         mkdir -p build
@@ -33,8 +34,13 @@ jobs:
     - name: inspect
       run: |
         ./build/install/bin/python3 -m sysconfig
+    - name: build wheel
+      run: |
+        mkdir -p wheel/interpreter-${{ matrix.python_version }}.data/data/
+        mv build/install/bin/python3 wheel/interpreter-${{ matrix.python_version }}.data/data/python
+        wheel_name="interpreter-${{ matrix.python_version }}-py2.py3-none-$(python -c "import sysconfig;print(sysconfig.get_platform().replace('.', '_').replace('-', '_'))").whl"
+        zip $wheel_name wheel/
     - name: upload
       uses: actions/upload-artifact@v3
       with:
-        name: python
-        path: build/install
+        path: "*.whl"
