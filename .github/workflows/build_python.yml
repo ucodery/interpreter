@@ -19,6 +19,7 @@ jobs:
       with:
         repository: indygreg/PyOxidizer
         ref: main
+
     - name: build python
       run: |
         set -x
