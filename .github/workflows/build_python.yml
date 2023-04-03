@@ -64,7 +64,7 @@ jobs:
         echo "RECORD,," >> interpreter-${{ matrix.python_version }}.dist-info/RECORD
         pushd interpreter-${{ matrix.python_version }}.data/scripts/
         for name in $(find . -type f); do
-            echo "../../../${name},sha256=$(sha256sum $name | cut -d' ' -f1),$(wc -c $name | cut -d' ' -f4)" >> wheel/interpreter-${{ matrix.python_version }}.dist-info/RECORD
+            echo "../../../${name},sha256=$(sha256sum $name | cut -d' ' -f1),$(wc -c $name | cut -d' ' -f4)" >> interpreter-${{ matrix.python_version }}.dist-info/RECORD
         done
         popd
         wheel_name="interpreter-${{ matrix.python_version }}-${tags}.whl"
