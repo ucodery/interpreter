@@ -36,7 +36,8 @@ jobs:
     - name: build wheel
       run: |
         tags="py2.py3-none-$(python -c "import sysconfig;print(sysconfig.get_platform().replace('.','_').replace('-','_').replace('linux','manylinux'))")"
-        mkdir -p wheel/interpreter-${{ matrix.python_version }}.data/data/
+        mkdir -p wheel/interpreter-${{ matrix.python_version }}.data/scripts/
+        mv build/install wheel/interpreter-${{ matrix.python_version }}.data/scripts/python${{ matrix.python_version }}
         mkdir -p wheel/interpreter-${{ matrix.python_version }}.dist-info/
         cat > wheel/interpreter-${{ matrix.python_version }}.dist-info/WHEEL <<EOL
         Wheel-Version: 1.0
@@ -47,7 +48,7 @@ jobs:
         cat > wheel/interpreter-${{ matrix.python_version }}.dist-info/METADATA <<EOL
         Metadata-Version: 2.1
         Name: interpreter
-        Version: ${{ github.ref_name }}
+        Version: ${{ matrix.python_version }}
         Summary: Python as a Package
         Home-page: https://github.com/ucodery/interpreter
         Author: Jeremiah Paige
@@ -56,9 +57,17 @@ jobs:
         
         Python interpreter managed as a python package
         EOL
-        mv build/install wheel/interpreter-${{ matrix.python_version }}.data/data/python
+        pushd wheel/
+        for name in $(find interpreter-${{ matrix.python_version }}.dist-info/* -type f) do
+            echo "${name},sha256=$(sha256sum $name | cut -d' ' -f1),$(wc -c $name | cut -d' ' -f4)" >> interpreter-${{ matrix.python_version }}.dist-info/RECORD
+        done
+        echo "RECORD,," >> interpreter-${{ matrix.python_version }}.dist-info/RECORD
+        pushd interpreter-${{ matrix.python_version }}.data/scripts/
+        for name in $(find . -type f) do
+            echo "../../../${name},sha256=$(sha256sum $name | cut -d' ' -f1),$(wc -c $name | cut -d' ' -f4)" >> wheel/interpreter-${{ matrix.python_version }}.dist-info/RECORD
+        done
+        popd
         wheel_name="interpreter-${{ matrix.python_version }}-${tags}.whl"
-        cd wheel
         zip -r $wheel_name ./*
     - name: upload
       uses: actions/upload-artifact@v3
