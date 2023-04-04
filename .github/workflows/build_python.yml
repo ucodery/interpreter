@@ -72,4 +72,4 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v3
       with:
-        path: "*.whl"
+        path: "wheel/*.whl"
