@@ -37,7 +37,7 @@ jobs:
       run: |
         tags="py2.py3-none-$(python -c "import sysconfig;print(sysconfig.get_platform().replace('.','_').replace('-','_').replace('linux','manylinux'))")"
         mkdir -p wheel/interpreter-${{ matrix.python_version }}.data/scripts/
-        mv build/install/* wheel/interpreter-${{ matrix.python_version }}.data/scripts
+        mv build/install/bin/* wheel/interpreter-${{ matrix.python_version }}.data/scripts
         mkdir -p wheel/interpreter-${{ matrix.python_version }}.dist-info/
         cat > wheel/interpreter-${{ matrix.python_version }}.dist-info/WHEEL <<EOL
         Wheel-Version: 1.0
