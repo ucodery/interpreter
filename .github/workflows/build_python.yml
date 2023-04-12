@@ -36,8 +36,8 @@ jobs:
     - name: build wheel
       run: |
         tags="py2.py3-none-$(python -c "import sysconfig;print(sysconfig.get_platform().replace('.','_').replace('-','_').replace('linux','manylinux'))")"
-        mkdir -p wheel/interpreter-${{ matrix.python_version }}.data/scripts/
-        mv build/install/bin/* wheel/interpreter-${{ matrix.python_version }}.data/scripts
+        mkdir -p wheel/interpreter-${{ matrix.python_version }}.data/data/
+        mv build/install/* wheel/interpreter-${{ matrix.python_version }}.data/data
         mkdir -p wheel/interpreter-${{ matrix.python_version }}.dist-info/
         cat > wheel/interpreter-${{ matrix.python_version }}.dist-info/WHEEL <<EOL
         Wheel-Version: 1.0
@@ -62,7 +62,7 @@ jobs:
             echo "${name},sha256=$(sha256sum $name | cut -d' ' -f1),$(wc -c $name | cut -d' ' -f4)" >> interpreter-${{ matrix.python_version }}.dist-info/RECORD
         done
         echo "RECORD,," >> interpreter-${{ matrix.python_version }}.dist-info/RECORD
-        pushd interpreter-${{ matrix.python_version }}.data/scripts/
+        pushd interpreter-${{ matrix.python_version }}.data/data/
         for name in $(find * -type f); do
             echo "../../../${name},sha256=$(sha256sum $name | cut -d' ' -f1),$(wc -c $name | cut -d' ' -f4)" >> ../../interpreter-${{ matrix.python_version }}.dist-info/RECORD
         done
