@@ -35,7 +35,10 @@ jobs:
         ./build/install/bin/python3 -m sysconfig
     - name: build wheel
       run: |
-        tags="py2.py3-none-$(python -c "import sysconfig;print(sysconfig.get_platform().replace('.','_').replace('-','_').replace('linux','manylinux'))")"
+        platform=$(python -c "import sysconfig;print(sysconfig.get_platform().replace('.','_').replace('-','_'))")
+        manylinux="manylinux_$(ldd --version | sed -rn 's/^.*([0-9])\.([0-9]+)$/\1_\2/p')"
+        platform="${platform/linux/"$manylinux"}"
+        tags="py2.py3-none-${platform}"
         mkdir -p wheel/interpreter-${{ matrix.python_version }}.data/data/
         mv build/install/* wheel/interpreter-${{ matrix.python_version }}.data/data
         mkdir -p wheel/interpreter-${{ matrix.python_version }}.dist-info/
