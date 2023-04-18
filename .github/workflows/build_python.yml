@@ -66,8 +66,9 @@ jobs:
             echo "../../../${name},sha256=$(sha256sum $name | cut -d' ' -f1),$(wc -c $name | cut -d' ' -f4)" >> ../../interpreter-${{ matrix.python_version }}.dist-info/RECORD
         done
         popd
-        echo "wheel_name=interpreter-${{ matrix.python_version }}-${tags}.whl" >> $GITHUB_ENV
-        zip -r ${{ env.wheel_name }} ./*
+        wheel_name="interpreter-${{ matrix.python_version }}-${tags}.whl"
+        echo "wheel_name=${wheel_name}" >> $GITHUB_ENV
+        zip -r $wheel_name ./*
     - name: upload
       uses: actions/upload-artifact@v3
       with:
