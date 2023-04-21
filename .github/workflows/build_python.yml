@@ -68,10 +68,9 @@ jobs:
         popd
         wheel_name="interpreter-${{ matrix.python_version }}-${tags}.whl"
         echo "wheel_name=${wheel_name}" >> $GITHUB_ENV
-        zip -r $wheel_name ./*
     - name: upload
       uses: actions/upload-artifact@v3
       with:
         name: ${{ env.wheel_name }}
-        path: "wheel/${{ env.wheel_name }}"
+        path: "wheel/*"
         if-no-files-found: error
